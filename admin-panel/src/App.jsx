@@ -1,22 +1,22 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import Sidebar from './components/Sidebar'
+import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
 import GetintouchEntires from './pages/GetintouchEntires'
-import CasesPage from './pages/CasesPage'
-import BlogsPage from './pages/BlogsPage'
+import AddCase from './pages/AddCase'
+import AddBlog from './pages/AddBlog'
 
 function App() {
 
   return (
     <>
     <BrowserRouter>
-    <Sidebar />
       <Routes>
-        <Route path='/' element={<Dashboard />} />
+        <Route path='/' element={<Login />} />
+        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/getintouch' element={<GetintouchEntires />} />
-        <Route path='/cases' element={<CasesPage />} />
-        <Route path='/blogs' element={<BlogsPage />} />
+        <Route path='/cases' element={<AddCase />} />
+        <Route path='/blogs' element={<AddBlog />} />
       </Routes>
     </BrowserRouter>
     </>

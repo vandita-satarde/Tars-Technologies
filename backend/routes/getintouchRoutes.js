@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
         console.log("Incoming data: ", req.body);
 
         const { name, companyName, email, requirement } = req.body;
-        const form = new Getintouch({ name, companyName, email, requirement });
+        const form = new GetinTouch({ name, companyName, email, requirement });
         await form.save();  
 
         res.status(201).json({ success: true, message: "Form submitted successfully!" })

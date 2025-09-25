@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
 import getintouchRoutes from "./routes/getintouchRoutes.js"
+import casesRoutes from "./routes/casesRoutes.js"
+import blogsRoutes from "./routes/blogsRoutes.js"
 
 
 dotenv.config();
@@ -13,6 +15,9 @@ app.use(express.json());
 
 // Routes
 app.use("/api/getintouch", getintouchRoutes);
+app.use("/api/cases", casesRoutes)
+app.use("/api/blogs", blogsRoutes)
+
 
 mongoose
     .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

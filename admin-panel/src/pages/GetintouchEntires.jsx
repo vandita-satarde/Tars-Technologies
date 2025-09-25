@@ -1,12 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import Sidebar from '../components/Sidebar'
 
 function GetintouchEntries() {
     const [Entries, setEntries] = useState([]);
     const [editingEntry, setEditingEntry] = useState(null); // store Entry being edited
     const [editData, setEditData] = useState({ remark: "" });
+    const [filter, setFilter] = useState("all");
 
+    // filtering before mapping
+    const filteredEntries = Entries.filter((entry) => {
+        if (filter === "withRemark") return entry.remark && entry.remark.trim() !== "";
+        if (filter === "withoutRemark") return !entry.remark || entry.remark.trim() === "";
+        return true;
+    });
 
     // Fetch Entries
     const fetchEntries = async () => {
@@ -51,14 +58,27 @@ function GetintouchEntries() {
         }
     };
 
+    const handleFilterChange = (e) => {
+        setFilter(e.target.value);
+    }
+
     return (
         <>
-            <div className="pl-5 md:pl-80 lg:pl-85 pt-24 md:pt-10 lg:pt-8 bg-gradient-to-l from-black to-[#1E1E1E] text-gray-300 min-h-screen pr-6 md:pr-8 lg:pr-16">
-                <p className='text-[25px] md:text-[38px] font-bold mb-4 md:mb-8 '>Get in Touch Entries</p>
-                <div className="bg-gradient-to-tr from-black to-[#1E1E1E] rounded-2xl shadow-md overflow-x-auto">
+            <Sidebar />
+            <div className="pl-5 md:pl-80 lg:pl-85 pt-24 md:pt-10 lg:pt-20 bg-gradient-to-l from-black to-[#1E1E1E] text-gray-300 min-h-screen pr-6 md:pr-8 lg:pr-16">
+                <p className='text-[25px] md:text-[35px] font-bold mb-4 md:mb-8 '>Get in Touch Entries</p>
+
+                {/* Filter Options */}
+                <div className="mb-4 space-x-2 text-[13px] md:text-[16px] text-white ">
+                    <button onClick={() => setFilter('all')} className="px-2 py-1 bg-gray-600 hover:bg-gray-500 rounded cursor-pointer ">All</button>
+                    <button onClick={() => setFilter('withRemark')} className="px-2 py-1 bg-green-600 hover:bg-green-500 rounded cursor-pointer">Connected</button>
+                    <button onClick={() => setFilter('withoutRemark')} className="px-2 py-1 bg-yellow-600 hover:bg-yellow-500 rounded cursor-pointer">Not Connected</button>
+                </div>
+
+                <div className=" rounded-2xl shadow-md overflow-x-auto">
                     <div className="space-y-4">
-                        {Entries.length > 0 ? (
-                            Entries.map((Entry) => (
+                        {filteredEntries.length > 0 ? (
+                            filteredEntries.map((Entry) => (
                                 <div
                                     key={Entry._id}
                                     className="bg-gradient-to-tl from-[#070707] to-[#1E1E1E] p-4 md:p-6 rounded-lg shadow hover:shadow-lg transition-all"
@@ -122,13 +142,13 @@ function GetintouchEntries() {
                                             <>
                                                 <button
                                                     onClick={() => handleEditClick(Entry)}
-                                                    className="bg-blue-800 hover:bg-blue-700 text-white px-3 py-1 rounded"
+                                                    className="bg-blue-800 hover:bg-blue-700 text-white px-3 py-1 rounded text-[14px] md:text-[16px]"
                                                 >
-                                                    Edit
+                                                    Edit Remark
                                                 </button>
                                                 <button
                                                     onClick={() => handleDelete(Entry._id)}
-                                                    className="bg-red-800 hover:bg-red-700 text-white px-3 py-1 rounded"
+                                                    className="bg-red-800 hover:bg-red-700 text-white px-3 py-1 rounded text-[14px] md:text-[16px]"
                                                 >
                                                     Delete
                                                 </button>

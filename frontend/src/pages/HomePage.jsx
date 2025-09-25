@@ -12,10 +12,10 @@ import leftarrow from '../assets/icons/l-arrow.png'
 import Testimonials from '../components/homecomponents/Testimonials';
 import Clients from '../components/commoncomponents/Clients';
 import GetinTouch from '../components/commoncomponents/GetinTouch';
-import Whoweare from '../components/commoncomponents/Whoweare';
 import Counts from '../components/commoncomponents/Counts';
 import Services from '../components/commoncomponents/Services';
 import Products from '../components/commoncomponents/Products';
+import Whoweare from '../components/commoncomponents/Whoweare';
 
 
 function HomePage() {
@@ -47,14 +47,7 @@ function HomePage() {
         </div>
       </div>
 
-      <div className='py-10 lg:py-28 text-center bg-gradient-to-b from-black to-[#1E1E1E] text-white '>
-        <p className='text-[12px] lg:text-[18px] text-[#9C9C9C] font-[500] '>Who We Are</p>
-        <p className='text-[16px] lg:text-[28px] mt-1 md:mt-3 uppercase font-[neutral_face]'>Epic Beginnings: Unveiling Our Essence,<br className='hidden md:block' /> Crafting Futures with Excellence.</p>
-        <Whoweare
-          image={whoweare}
-          button='Who We Are &nbsp; →'
-        />
-      </div>
+      <Whoweare/>
       <Counts />
       <Services />
       <Products />
