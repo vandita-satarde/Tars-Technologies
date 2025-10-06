@@ -7,10 +7,58 @@ function AddCase() {
   const [cases, setCases] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
+    images: [], // cloudinary images
     title: "",
     description: "",
     details: { problemBefore: "", problemSolved: "", whatWeAdd: "" }
   });
+
+  // cloudinary image upload
+  const [uploading, setUploading] = useState(false);
+
+  const handleImageUpload = async (e) => {
+    const files = e.target.files;
+    if (!files) return;
+    setUploading(true);
+
+    try {
+      const uploadedImages = [];
+
+      for (let file of files) {
+        const formData = new FormData();
+        formData.append('image', file);
+
+        const res = await axios.post("http://localhost:5000/api/images/upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
+
+        if (res.data.success) {
+          uploadedImages.push({
+            url: res.data.data.secure_url,
+            public_id: res.data.data.public_id
+          });
+        }
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        images: [...(prev.images || []), ...uploadedImages]
+      }));
+
+    } catch (err) {
+      console.error("Image upload error: ", err);
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  // Delete image from cloudinary
+  const handleRemoveImage = (public_id) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((img) => img.public_id !== public_id)
+    }));
+  }
 
   // Fetch cases
   const fetchCases = async () => {
@@ -41,7 +89,7 @@ function AddCase() {
     e.preventDefault();
     try {
       await axios.post("http://localhost:5000/api/cases", formData);
-      setFormData({ title: "", description: "", details: { problemBefore: "", problemSolved: "", whatWeAdd: "" } });
+      setFormData({ images: [], title: "", description: "", details: { problemBefore: "", problemSolved: "", whatWeAdd: "" } });
       fetchCases();
     } catch (err) {
       console.error("Error submitting case:", err);
@@ -53,7 +101,7 @@ function AddCase() {
     try {
       await axios.put(`http://localhost:5000/api/cases/${id}`, formData);
       setEditingId(null);
-      setFormData({ title: "", description: "", details: { problemBefore: "", problemSolved: "", whatWeAdd: "" } });
+      setFormData({ images: [], title: "", description: "", details: { problemBefore: "", problemSolved: "", whatWeAdd: "" } });
       fetchCases();
     } catch (err) {
       console.error("Error updating case:", err);
@@ -80,6 +128,25 @@ function AddCase() {
 
         {/* Add / Edit Form */}
         <form onSubmit={editingId ? (e) => { e.preventDefault(); handleSave(editingId); } : handleSubmit} className='w-full lg:w-[450px] flex flex-col gap-4 mb-10'>
+          {/* Image Upload */}
+          <h3 className="font-semibold">Case's Images</h3>
+          <input
+            type='file'
+            multiple
+            accept='image/*'
+            onChange={handleImageUpload}
+            className='border border-gray-700 rounded-md p-2 w-full'
+          />
+          {uploading && <p className='text-gray-400 mt-2'>Uploading...</p>}
+          <div className='flex gap-3 flex-wrap mt-3'>
+            {formData.images?.map((img) => (
+              <div key={img.public_id} className='relative'>
+                <img src={img.url} alt='preview' className='w-24 h-24 object-cover rounded' />
+                <button type='button' onClick={() => handleRemoveImage(img.public_id)} className='absolute top-0 right-0 bg-red-600 text-white text-xs px-1 rounded ' >✕</button>
+              </div>
+            ))}
+          </div>
+
           <input
             type='text'
             name='title'
@@ -146,6 +213,13 @@ function AddCase() {
         <div className='flex flex-wrap gap-8'>
           {cases.length > 0 ? cases.map((item) => (
             <div key={item._id} className='bg-[#1E1E1E] p-4 rounded w-full md:w-[45%]'>
+              <div className="flex gap-3 flex-wrap mt-3">
+                {item.images && item.images.length > 0 && item.images.map((img) => (
+                  <div key={img.public_id || img.url} className="relative">
+                    <img src={img.url} alt="blog" className="w-24 h-24 object-cover rounded" />
+                  </div>
+                ))}
+              </div>
               <h3 className='text-[18px] font-semibold'>{item.title}</h3>
               <p className='text-gray-400 mt-1'>{item.description}</p>
               <p className='text-gray-400 mt-2'><strong>Problem Before:</strong> {item.details?.problemBefore || '-'}</p>
@@ -157,6 +231,7 @@ function AddCase() {
                   onClick={() => {
                     setEditingId(item._id);
                     setFormData({
+                      images: item.images || [],
                       title: item.title,
                       description: item.description,
                       details: { ...item.details }

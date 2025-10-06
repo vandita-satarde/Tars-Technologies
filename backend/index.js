@@ -2,9 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import getintouchRoutes from "./routes/getintouchRoutes.js"
+import productRoutes from "./routes/productRoutes.js"
 import casesRoutes from "./routes/casesRoutes.js"
 import blogsRoutes from "./routes/blogsRoutes.js"
+import imageRoutes from "./routes/imageRoutes.js"
+import clientRoutes from "./routes/clientImageRoutes.js";
+import getintouchRoutes from "./routes/getintouchRoutes.js"
 
 
 dotenv.config();
@@ -14,9 +17,12 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/getintouch", getintouchRoutes);
+app.use("/api/products", productRoutes)
 app.use("/api/cases", casesRoutes)
 app.use("/api/blogs", blogsRoutes)
+app.use("/api/images", imageRoutes)
+app.use("/api/clients", clientRoutes);
+app.use("/api/getintouch", getintouchRoutes);
 
 
 mongoose

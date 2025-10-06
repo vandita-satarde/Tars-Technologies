@@ -15,7 +15,7 @@ function AboutPage() {
         heading='ABOUT US'
         description='TARS Technologies is a team of passionate innovators dedicated to delivering simple and intelligent IT solutions. With expertise in web services, training, and development, we empower businesses to streamline processes, stay competitive, and embrace the future with confidence.'
       />
-      <div className='pt-16 lg:pt-62 text-center bg-gradient-to-b from-black to-[#1E1E1E] text-white '>
+      <div className='pt-16 lg:pt-32 text-center bg-gradient-to-b from-black to-[#1E1E1E] text-white '>
         <p className='text-[12px] lg:text-[18px] text-[#9C9C9C] font-[500] '>OUR Vision & Mission</p>
         <p className='text-[16px] lg:text-[28px] mt-1 md:mt-3 uppercase font-[neutral_face]'>Epic Beginnings: Unveiling Our Essence,<br className='hidden md:block' /> Crafting Futures with Excellence.</p>
         <div className='flex flex-col md:flex-row gap-10 lg:gap-70 py-12 lg:py-25 px-5 lg:px-25'>
@@ -39,7 +39,7 @@ function AboutPage() {
         <p className='text-[16px] lg:text-[28px] mt-1 md:mt-3 uppercase font-[neutral_face]'>Your Aspiration, Our Expertise: Driven by<br /> Dreamers, Built by Doers.</p>
         <div className='flex flex-col md:flex-row justify-center  gap-5 md:gap-50 py-17'>
           <People picture={image} name='Sumedh Boudh' position='Founder' />
-          <People picture={image} name='Sumedh Boudh' position='Founder' />
+          <People picture={image} name='Shrutika Tirpude' position='Co-Founder' />
         </div>
         <p className='pt-8 md:pt-14 text-[12px] lg:text-[18px] text-[#9C9C9C] font-[500] '>Our Team</p>
         <p className='text-[16px] lg:text-[28px] mt-1 md:mt-3 uppercase font-[neutral_face] mx-6'>Your Aspiration, Our Expertise: Brains<br className='hidden md:block' /> Behind the Breakthroughs.</p>

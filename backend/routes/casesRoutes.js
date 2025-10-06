@@ -8,8 +8,8 @@ router.post("/", async (req, res) => {
     try {
         console.log("Incoming data: ", req.body)
 
-        const { title, description } = req.body;
-        const form = new casesModel({ title, description })
+        const { title, description,details,images } = req.body;
+        const form = new casesModel({ title, description ,details,images })
         await form.save();
 
         res.status(201).json({ success: true, message: "Case added successfully" })

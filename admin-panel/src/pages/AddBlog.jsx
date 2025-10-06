@@ -8,17 +8,67 @@ function AddBlog() {
   const [blogs, setBlogs] = useState([])
   const [editingId, setEditingId] = useState(null)
   const [formData, setFormData] = useState({
+    images: [], // cloudinary images
     tag: "",
     title: "",
     name: "",
     date: "",
-
     readingTime: "",
     sections: [{ subtitle: "", content: "" }],
     points: [""]
   })
 
-  // fetch blogs
+
+  // cloudinary upload
+  const [uploading, setUploading] = useState(false);
+
+  const handleImageUpload = async (e) => {
+    const files = e.target.files;
+    if (!files) return;
+    setUploading(true);
+
+    try {
+      const uploadedImages = [];
+
+      for (let file of files) {
+        const formData = new FormData();
+        formData.append("image", file);
+
+        const res = await axios.post("http://localhost:5000/api/images/upload", formData, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
+
+        if (res.data.success) {
+          uploadedImages.push({
+            url: res.data.data.secure_url,
+            public_id: res.data.data.public_id
+          });
+        }
+      }
+
+      setFormData((prev) => ({
+        ...prev,
+        images: [...(prev.images || []), ...uploadedImages]
+      }));
+
+    } catch (err) {
+      console.error("Image upload error:", err);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Delete image from cloudinary
+  const handleRemoveImage = (public_id) => {
+    setFormData((prev) => ({
+      ...prev,
+      images: prev.images.filter((img) => img.public_id !== public_id)
+    }));
+  };
+
+
+
+  // Fetch Blogs
   const fetchBlogs = async () => {
     try {
       const res = await axios.get("http://localhost:5000/api/blogs")
@@ -41,28 +91,40 @@ function AddBlog() {
   // add new blog
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (!isValidDateFormat(formData.date)) {
+      alert("Date must be in DD-MM-YYYY format");
+      return;
+    }
+
     try {
       await axios.post("http://localhost:5000/api/blogs", formData)
-      setFormData({ tag: "", title: "", name: "", date: "", readingTime: "", sections: [{ subtitle: "", content: "" }], points: [""] })
+      setFormData({ images: [], tag: "", title: "", name: "", date: "", readingTime: "", sections: [{ subtitle: "", content: "" }], points: [""] })
       fetchBlogs()
     } catch (err) {
       console.error("Error adding blog:", err)
     }
   }
 
-  // save edited blog
+  // Save edited blog
   const handleSave = async (id) => {
+
+    if (!isValidDateFormat(formData.date)) {
+      alert("Date must be in DD-MM-YYYY format");
+      return;
+    }
+
     try {
       await axios.put(`http://localhost:5000/api/blogs/${id}`, formData)
       setEditingId(null)
-      setFormData({ tag: "", title: "", name: "", date: "", readingTime: "", sections: [{ subtitle: "", content: "" }], points: [""] })
+      setFormData({ images: [], tag: "", title: "", name: "", date: "", readingTime: "", sections: [{ subtitle: "", content: "" }], points: [""] })
       fetchBlogs()
     } catch (err) {
       console.error("Error updating blog:", err)
     }
   }
 
-  // delete blog
+  // Delete blog
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this blog?")) {
       try {
@@ -73,6 +135,14 @@ function AddBlog() {
       }
     }
   }
+
+  // validate date format
+  const isValidDateFormat = (dateStr) => {
+    // Matches DD-MM-YYYY
+    const regex = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
+    return regex.test(dateStr);
+  };
+
 
   // change subtitle or content of a section
   const handleSectionChange = (index, field, value) => {
@@ -124,6 +194,27 @@ function AddBlog() {
         <h1 className='text-[25px] md:text-[35px] font-bold mb-6'>Add / Edit Blogs</h1>
 
         <form onSubmit={editingId ? (e) => { e.preventDefault(); handleSave(editingId); } : handleSubmit} className='flex flex-col gap-4 mb-10 lg:w-[450px] '>
+          {/* ✅ Image Upload */}
+          <div>
+            <h3 className="font-semibold">Blog's Images</h3>
+            <input 
+              type="file" 
+              multiple 
+              accept="image/*" 
+              onChange={handleImageUpload} 
+              className='border border-gray-700 rounded-md p-2 w-full' 
+            />
+            {uploading && <p className="text-gray-400 mt-2">Uploading...</p>}
+            <div className="flex gap-3 flex-wrap mt-3">
+              {formData.images.map((img) => (
+                <div key={img.public_id} className="relative">
+                  <img src={img.url} alt="preview" className="w-24 h-24 object-cover rounded" />
+                  <button type="button" onClick={() => handleRemoveImage(img.public_id)} className="absolute top-0 right-0 bg-red-600 text-white text-xs px-1 rounded">✕</button>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <input
             type='text'
             name='tag'
@@ -150,10 +241,11 @@ function AddBlog() {
             required
           />
           <input
-            type='date'
+            type='text'
             name='date'
             value={formData.date}
             onChange={handleChange}
+            placeholder='DD-MM-YYYY ( will show as 20 Aug, 2022)'
             className='p-2 bg-transparent border border-gray-600 rounded-md'
             required
           />
@@ -248,7 +340,7 @@ function AddBlog() {
               type='button'
               onClick={() => {
                 setEditingId(null)
-                setFormData({ tag: "", title: "", name: "", date: "", sections: [{ subtitle: "", content: "" }], points: [" "] })
+                setFormData({ images: [], tag: "", title: "", name: "", date: "", readingTime: "", sections: [{ subtitle: "", content: "" }], points: [" "] })
               }}
               className='hover:bg-red-600 bg-red-500 text-white w-[450px] p-2 rounded-sm'
             >
@@ -262,10 +354,24 @@ function AddBlog() {
         <div className='flex flex-wrap gap-8'>
           {blogs.length > 0 ? blogs.map((item) => (
             <div key={item._id} className='bg-[#1E1E1E] p-4 rounded w-full md:w-[45%]'>
-              <h3 className='text-[18px] font-semibold'>{item.tag}</h3>
-              <p className='text-gray-400 mt-1'>{item.title}</p>
+              <div className="flex gap-3 flex-wrap mt-3">
+                {item.images && item.images.length > 0 && item.images.map((img) => (
+                  <div key={img.public_id || img.url} className="relative">
+                    <img src={img.url} alt="blog" className="w-24 h-24 object-cover rounded" />
+                  </div>
+                ))}
+              </div>
+              <p className='text-gray-400 bg-blue-800 inline p-1 rounded-md mt-1'>{item.tag}</p>
+              <h3 className='text-[18px] font-semibold'>{item.title}</h3>
               <p className='text-gray-400 mt-2'><strong>Author:</strong> {item.name || '-'}</p>
-              <p className='text-gray-400'><strong>Date:</strong> {item.date || '-'}</p>
+              <p className='text-gray-400'>
+                <strong>Date:</strong>{" "}
+                {item.date ? new Date(item.date).toLocaleDateString("en-GB", {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric"
+                }) : "-"}
+              </p>
               <p className='text-gray-400'><strong>Reading Time:</strong> {item.readingTime || '-'}</p>
 
               {/* ✅ Show blog sections */}
@@ -299,10 +405,12 @@ function AddBlog() {
                   onClick={() => {
                     setEditingId(item._id)
                     setFormData({
+                      images: item.images && item.images.length > 0 ? item.images : [], // ✅ restore images
                       tag: item.tag,
                       title: item.title,
                       name: item.name,
                       date: item.date,
+                      readingTime: item.readingTime,
                       sections: item.sections && item.sections.length > 0 ? item.sections : [{ subtitle: "", content: "" }], // ✅ preserve sections
                       points: item.points && item.points.length > 0 ? item.points : [""], // ✅ preserve points
                     })

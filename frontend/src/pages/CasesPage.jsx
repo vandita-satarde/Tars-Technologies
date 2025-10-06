@@ -4,10 +4,10 @@ import axios from 'axios'
 import HeroSection from '../components/commoncomponents/HeroSection'
 import CaseCard from '../components/commoncomponents/CaseCard'
 import GetinTouch from '../components/commoncomponents/GetinTouch'
-import casestudy from '../assets/images/caseStudy.png'
 
 function CasesPage() {
   const [cases, setCases] = useState([])
+  const [showAll, setShowAll] = useState(false) // toggle between showing 5 or all
 
   useEffect(() => {
     const fetchCases = async () => {
@@ -20,7 +20,14 @@ function CasesPage() {
     }
     fetchCases();
   }, [])
-  
+
+  // load more
+  const handleToggle = () => {
+    setShowAll(prev => !prev) // toggle showAll
+  }
+
+  const visibleCount = showAll ? cases.length : 5  // determine how many to show
+
   return (
     <>
       <HeroSection
@@ -33,10 +40,10 @@ function CasesPage() {
         <p className='text-[16px] lg:text-[28px] mt-1 md:mt-3 uppercase font-[neutral_face]'>Case Studies That Reflect Our<br /> Commitment to Excellence</p>
         <div>
           {cases.length > 0 ? (
-            cases.map((item) => (
+            cases.slice(0, visibleCount).map((item) => (
               <CaseCard
                 key={item._id}
-                image={casestudy}
+                image={item.images}
                 title={item.title}
                 description={item.description}
                 contentDiv='w-[260px] lg:w-[450px]'
@@ -49,6 +56,17 @@ function CasesPage() {
             <p className='text-gray-400'>Loading...</p>
           )}
         </div>
+
+        {/* toggle button */}
+        {cases.length > 5 && (
+          <button
+            onClick={handleToggle}
+            className='w-[90px] md:w-[120px] py-3 mt-14 text-[12px] md:text-[16px] rounded-[6px] border hover:bg-white hover:text-black duration-500 '
+          >
+            {showAll ? 'View Less' : 'View More'}
+          </button>
+        )}
+
       </div>
 
       <GetinTouch />

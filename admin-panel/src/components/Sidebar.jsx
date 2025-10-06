@@ -32,9 +32,11 @@ function Sidebar() {
           <p className='text-[25px] hidden md:block'>Admin Panel</p>
           <div className='py-18 md:py-11 px-2 md:px-4 space-y-4 md:space-y-5 lg:space-y-3 '>
             <p><Link to='/'>Dashboard</Link></p>
-            <p><Link to='/getintouch' >Get in Touch Entries</Link></p>
+            <p><Link to='/products'>Add Products</Link></p>
             <p><Link to='/cases'>Add Cases</Link></p>
             <p><Link to='/blogs'>Add a Blog</Link></p>
+            <p><Link to='/getintouch'>Get in Touch Entries</Link></p>
+            <p><Link to='/clients'>Add Client's Images</Link></p>
           </div>
         </div>
         <button onClick={handleLogout} className='text-black bg-[#F5F9FE] w-full h-9 md:h-12 lg:h-9 rounded-xs cursor-pointer '>Log Out</button>

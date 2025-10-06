@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
     console.log('Incoming data: ', req.body);
 
     const { tag, title, name, date } = req.body;
-    const form = new blogsModel({ tag, title, name, date });
+    const form = new blogsModel({  images: req.body.images || [], tag, title, name, date, readingTime: req.body.readingTime, sections: req.body.sections || [], points: req.body.points || [] });
     await form.save();
 
     res.status(201).json({ success: true, message: 'Blog added successfully' });
