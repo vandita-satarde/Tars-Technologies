@@ -12,7 +12,7 @@ function HeroSection({ heading, description, section }) {
   return (
     <>
       <div className='relative '>
-        <img src={herosectionimage} className=' object-cover w-full h-[920px] lg:h-[730px]' />
+        <img src={herosectionimage} className=' object-cover w-full h-[920px] lg:h-[742px]' />
 
         {/* Inset shadow overlay */}
         <div className="absolute inset-0 shadow-[inset_0_0_200px_rgba(0,0,0,1)]"></div>
@@ -36,10 +36,10 @@ function HeroSection({ heading, description, section }) {
           />
 
         </div>
-        <div className='absolute inset-0 flex flex-col justify-center items-center text-center tracking-wider text-white pt-20 md:pt-38 lg:pt-42 z-10'>
+        <div className='absolute inset-0 flex flex-col justify-center items-center text-center tracking-wider text-white pt-20 h-full  md:pt-38 lg:pt-42  z-10'>
           <p className='text-[26px] md:text-[35px] lg:text-[48px] text-transparent bg-clip-text bg-gradient-to-r from-white to-[#FFFFFF30] font-[neutral_face] '>{heading}</p>
-          <p className='w-[326px] md:w-[700px] lg:w-[1000px] text-[11px] md:text-[16px] lg:text-[24px] mt-8 lg:mt-24 tracking-widest leading-7 lg:leading-10'>{description}</p>
-          <div className=' flex flex-col items-center gap-2 lg:gap-2 pt-60 md:pt-50 lg:pt-30 mb-20 text-[13px] lg:text-[16px] font-[neutral_face]'>
+          <p className='w-[326px] md:w-[700px] lg:w-[1000px] text-[11px] md:text-[16px] lg:text-[24px] mt-8 lg:mt-24 tracking-widest leading-7 lg:leading-10 mb-20 '>{description}</p>
+          <div className=' flex flex-col items-center gap-2 lg:gap-2 pt-60 md:pt-50 lg:pt-30  text-[13px] lg:text-[16px] font-[neutral_face]'>
             <p>SCROLL</p>
             <div className="relative flex flex-col items-center h-12">
               {[0, 1, 2].map((i) => (

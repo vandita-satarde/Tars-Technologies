@@ -9,9 +9,10 @@ const navLinks = [
   { path: "/about", label: "ABOUT" },
   { path: "/services", label: "SERVICES" },
   { path: "/product", label: "PRODUCT" },
-  { path: "/cases", label: "CASES" },
+  // { path: "/cases", label: "CASES" },
   { path: "/blogs", label: "BLOGS" },
   { path: "/Contact", label: "CONTACT" },
+  { path:"/carrer" ,label:"CAREER"}
 ]
 
 
@@ -71,8 +72,9 @@ function Navbar() {
         </div>
 
         {/* desktop button */}
-        <button className='hidden md:block border border-white rounded-[8px] w-[140px] lg:w-[196px] h-[40px] lg:h-[49px] text-[12px] lg:text-[18px] font-[600] hover:bg-white hover:text-black duration-300 '>Get a Free Quote</button>
-
+<NavLink to='/GetQuote'>
+          <button className='hidden md:block border border-white rounded-[8px] w-[140px] lg:w-[196px] h-[40px] lg:h-[49px] text-[12px] lg:text-[18px] font-[600] hover:bg-white hover:text-black duration-300 '>Get a Free Quote</button>
+</NavLink>
         {/* mobile toggle button */}
         <div className='block md:hidden'>
           <button onClick={toggleMenu} aria-label='Toggle Menu' >
@@ -96,8 +98,10 @@ function Navbar() {
               {label}
             </NavLink>
           ))}
+  <NavLink to="./GetQuote">
+              <button onClick={toggleMenu} className='border border-white rounded-[8px] w-[130px] h-[35px] font-[600] hover:bg-white hover:text-black duration-300 '>Get a Free Quote</button>
 
-          <button onClick={toggleMenu} className='border border-white rounded-[8px] w-[130px] h-[35px] font-[600] hover:bg-white hover:text-black duration-300 '>Get a Free Quote</button>
+  </NavLink>
         </div>
       )}
     </>

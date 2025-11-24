@@ -62,7 +62,7 @@ function Clients() {
       </p>
 
       {/* Carousel */}
-      <div className="relative flex justify-center items-center py-18 md:py-38 lg:py-55">
+      <div  className="relative flex justify-center items-center py-18 md:py-38 lg:py-55">
         <AnimatePresence initial={false}>
           {visibleImages.map((client, idx) => {
             let scale = idx === 1 ? 1 : 0.8;
@@ -84,6 +84,7 @@ function Clients() {
                 animate={{ opacity: 1, scale, x }}
                 exit={{ opacity: 0, scale: 0 }}
                 transition={{ duration: 0.6, ease: "easeInOut" }}
+                data-aos="zoom-out-down"
                 className="absolute w-[180px] md:w-[280px] lg:w-[418px] h-[100px] md:h-[180px] lg:h-[270px] object-cover border border-white"
               />
             );
