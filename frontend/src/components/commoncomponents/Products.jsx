@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
 
 import htmlIcon from "../../assets/icons/tech2.png";
 import cssIcon from "../../assets/icons/tech1.png";
@@ -8,16 +9,22 @@ import pythonIcon from "../../assets/icons/tech3.png";
 import wordPressIcon from "../../assets/icons/tech4.png";
 import leftarrow from "../../assets/icons/l-arrow.png";
 import rightarrow from "../../assets/icons/r-arrow.png";
+import jsIcon from "../../assets/icons/js.png";
+import reactIcon from "../../assets/icons/React.png";
+import angularicon from "../../assets/icons/angular.png";
+import Awsicon from "../../assets/icons/Aws.png";
+import Azureicon from "../../assets/icons/azure.jpg";
 
 const techIcons = {
   HTML: htmlIcon,
   CSS: cssIcon,
   Python: pythonIcon,
   WordPress: wordPressIcon,
-  // JavaScript: jsIcon,
-  // React: reactIcon,
-  // Nodejs: nodeIcon,
-  // MongoDB: mongodbIcon,
+  JavaScript: jsIcon,
+  React: reactIcon,
+  Angular: angularicon,
+  Aws: Awsicon,
+  Azure: Azureicon,
 };
 
 function Products() {
@@ -44,7 +51,6 @@ function Products() {
     return () => clearInterval(interval);
   }, [currentProduct]);
 
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -59,18 +65,13 @@ function Products() {
 
   const handlePrev = () => {
     setDirection(-1);
-    setCurrentIndex((prev) =>
-      prev === 0 ? products.length - 1 : prev - 1
-    );
+    setCurrentIndex((prev) => (prev === 0 ? products.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
     setDirection(1);
-    setCurrentIndex((prev) =>
-      prev === products.length - 1 ? 0 : prev + 1
-    );
+    setCurrentIndex((prev) => (prev === products.length - 1 ? 0 : prev + 1));
   };
-
 
   // Framer Motion variants for sliding animation
   const variants = {
@@ -89,15 +90,26 @@ function Products() {
 
   return (
     <div className="py-10 lg:py-28 text-center bg-gradient-to-bl from-[#1E1E1E] to-[#121212] text-white relative overflow-hidden">
-      <p data-aos="fade-down" className="text-[12px] md:text-[16px] lg:text-[18px] text-[#9C9C9C] font-[500]">Product</p>
-      <p data-aos="fade-up" className="text-[16px] md:text-[22px] lg:text-[28px] mt-1 md:mt-3 px-6 md:px-0 uppercase font-[neutral_face]">
+      <p
+        data-aos="fade-down"
+        className="text-[12px] md:text-[16px] lg:text-[18px] text-[#9C9C9C] font-[500]"
+      >
+        Product
+      </p>
+      <p
+        data-aos="fade-up"
+        className="text-[16px] md:text-[22px] lg:text-[28px] mt-1 md:mt-3 px-6 md:px-0 uppercase font-[neutral_face]"
+      >
         From Challenge to Victory: Exploring Case
         <br className="hidden md:block" /> Studies of Innovation and Excellence
       </p>
 
-      <div data-aos="fade-left"
-     data-aos-offset="300"
-     data-aos-easing="ease-in-sine" className="relative flex flex-col lg:flex-row justify-center mt-6 lg:mt-14 px-5 md:px-5 lg:min-h-[300px]">
+      <div
+        data-aos="fade-left"
+        data-aos-offset="300"
+        data-aos-easing="ease-in-sine"
+        className="relative flex flex-col lg:flex-row justify-center mt-6 lg:mt-14 px-5 md:px-5 lg:min-h-[300px]"
+      >
         <AnimatePresence initial={false} custom={direction}>
           {currentProduct && (
             <motion.div
@@ -110,12 +122,11 @@ function Products() {
               transition={{ type: "tween", duration: 0.5 }}
               className="flex flex-col md:flex-row gap-5 lg:gap-15  "
             >
-
               {/* Image carousel */}
 
-              <div  className="w-full md:w-[350px] lg:w-[650px] md:h-[460px] relative overflow-hidden rounded">
+              <div className="w-full md:w-[350px] lg:w-[650px] md:h-[460px] relative overflow-hidden rounded">
                 <AnimatePresence custom={direction}>
-                  <motion.img    
+                  <motion.img
                     key={currentProduct.images[imageIndex]?.url}
                     src={currentProduct.images[imageIndex]?.url}
                     alt="product"
@@ -147,27 +158,32 @@ function Products() {
                     }}
                   />
                 </AnimatePresence>
-
               </div>
 
               <div className="flex flex-col justify-between text-left w-full md:w-[400px] lg:w-[490px]">
                 <div className="space-y-4 lg:space-y-5  ">
-                  <p className="text-[10px] md:text-[13px] lg:text-[14px] text-[#9C9C9C] font-[500]">Category</p>
-                  <p className="text-[15px] md:text-[22px] lg:text-[24px]">{currentProduct.title}</p>
+                  <p className="text-[10px] md:text-[13px] lg:text-[14px] text-[#9C9C9C] font-[500]">
+                    Category
+                  </p>
+                  <p className="text-[15px] md:text-[22px] lg:text-[24px]">
+                    {currentProduct.title}
+                  </p>
                   <p
                     className="text-[11px] md:text-[14px] lg:text-[16px] overflow-hidden text-ellipsis"
                     style={{
-                      display: '-webkit-box',
+                      display: "-webkit-box",
                       WebkitLineClamp: 5, // number of lines to show before truncating
-                      WebkitBoxOrient: 'vertical',
+                      WebkitBoxOrient: "vertical",
                     }}
                   >
                     {currentProduct.description}
                   </p>
                 </div>
                 <div className="space-y-3 lg:space-y-2">
-                  <p className="pt-4 lg:pt-6 pb-3 text-[11px] md:text-[15px] lg:text-[16px] text-[#9C9C9C] font-[500]">Technology</p>
-                  <div className="flex gap-7 md:gap-8 lg:gap-15 pl-4 lg:pl-6">
+                  <p className="pt-4 lg:pt-6 pb-3 text-[11px] md:text-[15px] lg:text-[16px] text-[#9C9C9C] font-[500]">
+                    Technology
+                  </p>
+                  <div className="flex gap-7 md:gap-8 lg:gap-5 pl-4 lg:pl-1">
                     {currentProduct.technologies?.map((tech, index) => (
                       <img
                         key={index}
@@ -177,9 +193,11 @@ function Products() {
                       />
                     ))}
                   </div>
-                  <button className="mt-8 md:mt-8 w-[160px] md:w-[180px] lg:w-[238px] h-[40px] md:h-[45px] lg:h-[56px] rounded-[8px] border hover:bg-white hover:text-black duration-500 text-[13px] md:text-[15px] lg:text-[16px] font-[500]">
-                    View Case Study &nbsp; →
-                  </button>
+                  <Link to={`/product-details/${currentProduct._id}`}>
+                    <button className="mt-8 w-[238px] h-[56px] rounded-[8px] border hover:bg-white hover:text-black duration-500">
+                      Product Details →
+                    </button>
+                  </Link>
                 </div>
               </div>
             </motion.div>
@@ -190,8 +208,18 @@ function Products() {
       {/* Arrows */}
       {products.length > 1 && (
         <div className="flex justify-center gap-5 pt-10 lg:pt-15">
-          <img src={leftarrow} className="w-8 md:w-10 lg:w-auto cursor-pointer" onClick={handlePrev} alt="prev" />
-          <img src={rightarrow} className="w-8 md:w-10 lg:w-auto cursor-pointer" onClick={handleNext} alt="next" />
+          <img
+            src={leftarrow}
+            className="w-8 md:w-10 lg:w-auto cursor-pointer"
+            onClick={handlePrev}
+            alt="prev"
+          />
+          <img
+            src={rightarrow}
+            className="w-8 md:w-10 lg:w-auto cursor-pointer"
+            onClick={handleNext}
+            alt="next"
+          />
         </div>
       )}
     </div>
