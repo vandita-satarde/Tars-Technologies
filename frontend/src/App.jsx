@@ -14,7 +14,7 @@ import CasesDetails from "./pages/CasesDetails";
 import BlogDetails from "./pages/BlogDetails";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import GetQuote from "./pages/Getquote";
+import GetQuote from "./pages/GetQuote";
 import ProductDetails from "./pages/ProductDetails";
 import CareersPage from "./pages/Carrer";
 
