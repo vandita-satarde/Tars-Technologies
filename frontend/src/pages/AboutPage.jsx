@@ -21,9 +21,10 @@ function AboutPage() {
       <div  id='nextsection' className='pt-16 lg:pt-32 text-center bg-gradient-to-b from-black to-[#1E1E1E] text-white '>
         <p data-aos="fade-down" className='text-[12px] lg:text-[18px] text-[#9C9C9C] font-[500] '>OUR Vision & Mission</p>
         <p data-aos="fade-down" className='text-[16px] lg:text-[28px] mt-1 md:mt-3 uppercase font-[neutral_face]'>Epic Beginnings: Unveiling Our Essence,<br className='hidden md:block' /> Crafting Futures with Excellence.</p>
-        <div data-aos="fade-right" className='flex flex-col md:flex-row gap-10 lg:gap-40 py-12 lg:py-25 px-5 lg:px-25'>
-          <div className='w-[300px] md:w-[445px] text-left space-y-4 lg:space-y-14 ml-42'>
+        <div data-aos="fade-right" className='flex flex-col md:flex-row gap-10 lg:gap-35 py-12 lg:py-25 px-5 lg:px-25'>
+          <div className='w-[300px] md:w-[445px] text-left space-y-4 lg:space-y-14 ml-30'>
             <p className='text-[18px] lg:text-[28px]  '>Vision: Vision for Tomorrow.</p>
+
             <p className='text-[12px] lg:text-[20px] '>"To create intelligent, simple, and future-ready IT solutions that empower businesses and enrich lives."</p>
           </div>
           <div className='w-[300px] md:w-[445px] text-left space-y-4 lg:space-y-14 '>

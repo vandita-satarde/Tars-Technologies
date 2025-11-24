@@ -7,6 +7,8 @@ import AddCase from './pages/AddCase'
 import AddBlog from './pages/AddBlog'
 import AddClients from './pages/AddClients'
 import AddProduct from './pages/AddProduct'
+import QuotesList from './pages/Quote'
+import Carrer from './pages/carrerpage'
 
 function App() {
 
@@ -22,10 +24,12 @@ function App() {
         <Route path='/getintouch' element={<GetintouchEntires />} />
 
         <Route path='/clients' element={<AddClients />} />
+        <Route path='/GetQuote' element={<QuotesList/>}/>
+        <Route path='/career' element={<Carrer/>}/>
       </Routes>
     </BrowserRouter>
     </>
   )
-}
+} 
 
 export default App

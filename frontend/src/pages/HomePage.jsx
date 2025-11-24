@@ -32,27 +32,14 @@ function HomePage() {
       <div  className='relative w-full min-h-screen lg:h-[600px] '>
         <img src={herosectionimage} className='absolute object-cover w-full h-full ' />
         <div  className='absolute flex right-5 lg:right-30 top-125 lg:top-110 space-y-1.4 gap-3 lg:space-y-1.2 z-50  '>
-          <img data-aos="flip-left"
-     data-aos-easing="ease-out-cubic"
-     data-aos-duration="2000" src={herosectionicon1} onClick={Linkdinprofile} className='w-9 md:w-12  ' />
-          <img data-aos="flip-left"
-     data-aos-easing="ease-out-cubic"
-     data-aos-duration="2000" src={herosectionicon2} className='w-9 md:w-12' />
-          <img data-aos="flip-left"
-     data-aos-easing="ease-out-cubic"
-     data-aos-duration="2000" src={herosectionicon3} className='w-9 md:w-12' />
-          <img data-aos="flip-left"
-     data-aos-easing="ease-out-cubic"
-     data-aos-duration="2000" src={herosectionicon4} className='w-9 md:w-12' />
+          <img data-aos="flip-left" data-aos-easing="ease-out-cubic" data-aos-duration="2000" src={herosectionicon1} onClick={Linkdinprofile} className='w-9 md:w-12  ' />
+          <img data-aos="flip-left"data-aos-easing="ease-out-cubic"data-aos-duration="2000" src={herosectionicon2} className='w-9 md:w-12' />
+          <img data-aos="flip-left"data-aos-easing="ease-out-cubic"data-aos-duration="2000" src={herosectionicon3} className='w-9 md:w-12' />
+          <img data-aos="flip-left"data-aos-easing="ease-out-cubic"data-aos-duration="2000" src={herosectionicon4} className='w-9 md:w-12' />
         </div>
         <div className='absolute inset-0 flex flex-col justify-center items-center text-center tracking-wider text-white pt-35 lg:pt-45 '>
-          <p data-aos="fade-right"
-     data-aos-offset="300"
-     data-aos-easing="ease-in-sine" className='text-[26px] md:text-[42px] lg:text-[48px] mt-40 text-transparent bg-clip-text bg-gradient-to-r from-white to-[#FFFFFF30] font-[neutral_face] '>ELEVATE YOUR VISION,<br className='block md:hidden' /> IGNITE<br className='hidden md:block' /> TOMORROW’S INNOVATION.</p>
-          <p data-aos="fade-left"
-     data-aos-anchor="#example-anchor"
-     data-aos-offset="500"
-     data-aos-duration="500" className='text-[10px] md:text-[16px] lg:text-[24px] mt-10 lg:mt-5'>Crafting Digital Excellence for a Future<br /> Beyond Imagination.</p>
+          <p data-aos="fade-right"data-aos-offset="300"data-aos-easing="ease-in-sine" className='text-[26px] md:text-[42px] lg:text-[48px] mt-40 text-transparent bg-clip-text bg-gradient-to-r from-white to-[#FFFFFF30] font-[neutral_face] '>ELEVATE YOUR VISION,<br className='block md:hidden' /> IGNITE<br className='hidden md:block' /> TOMORROW’S INNOVATION.</p>
+          <p data-aos="fade-left"data-aos-anchor="#example-anchor"data-aos-offset="500"data-aos-duration="500" className='text-[10px] md:text-[16px] lg:text-[24px] mt-10 lg:mt-5'>Crafting Digital Excellence for a Future<br /> Beyond Imagination.</p>
           <div className='flex justify-center items-center gap-2 md:gap-4 lg:gap-20 mt-55 md:mt-70 lg:mt-30 text-[8px] md:text-[20px] lg:text-[24px] '>
             <p data-aos="zoom-out-up" >Full Cycle Product Development</p>
             <p data-aos="zoom-out-up">Digital Product Design</p>
@@ -75,7 +62,7 @@ function HomePage() {
                   className="absolute top-0"
                 >
                   <motion.button
-                    onClick={() => {
+                    onClick={() => {   
                       const element = document.querySelector('#nextsection');
                       if (element) {
                         const targetY = element.getBoundingClientRect().top + window.pageYOffset;
